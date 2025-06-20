@@ -4,7 +4,11 @@
 
 import nltk
 import spacy
+import re
+import math
+import pandas as pd
 from pathlib import Path
+from collections import counter
 
 
 nlp = spacy.load("en_core_web_sm")
@@ -12,7 +16,7 @@ nlp.max_length = 2000000
 
 
 
-def fk_level(text, d):
+def fk_level(text: str, d: dict):
     """Returns the Flesch-Kincaid Grade Level of a text (higher grade is more difficult).
     Requires a dictionary of syllables per word.
 
@@ -23,7 +27,23 @@ def fk_level(text, d):
     Returns:
         float: The Flesch-Kincaid Grade Level of the text. (higher grade is more difficult)
     """
-    pass
+
+    sents = sent_tokenize (text)
+    if not sents:
+        return  0.0
+
+    tokens = word_tokenize (text)
+    words = [t for t in tokens if t.isalpha()]
+
+    n_sent = len(sents)
+    n_word = len(words)
+    n_syl = sum(count_syl (w,d) for w in words)
+
+    if n_word == 0:
+        return 0.0
+
+    return 0.39 * (n_word / n_sent) + 11.8 * (n_syl / n_word) - 15.59
+
 
 
 def count_syl(word, d):
