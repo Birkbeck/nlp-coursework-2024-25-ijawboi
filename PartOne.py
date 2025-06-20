@@ -60,6 +60,11 @@ def count_syl(word: str, d: dict):
     word_lwr = word.lower()
     if word_lwr in d:
         proctn = d[word_lwr]
+        syl_counts = [sum(bool(PHONEME_DIGIT_RE.search(ph)) for ph in pron) for pron in proctn]
+        return min(syl_counts)
+
+    clusters = VOWEL_RE.findall(word_lwr)
+    return max(1, len(clusters))
 
 
 def read_novels(path=Path.cwd() / "texts" / "novels"):
