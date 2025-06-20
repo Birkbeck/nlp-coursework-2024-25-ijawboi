@@ -46,7 +46,7 @@ def fk_level(text: str, d: dict):
 
 
 
-def count_syl(word, d):
+def count_syl(word: str, d: dict):
     """Counts the number of syllables in a word given a dictionary of syllables per word.
     if the word is not in the dictionary, syllables are estimated by counting vowel clusters
 
@@ -57,7 +57,9 @@ def count_syl(word, d):
     Returns:
         int: The number of syllables in the word.
     """
-    pass
+    word_lwr = word.lower()
+    if word_lwr in d:
+        proctn = d[word_lwr]
 
 
 def read_novels(path=Path.cwd() / "texts" / "novels"):
