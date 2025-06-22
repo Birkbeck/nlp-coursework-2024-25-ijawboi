@@ -15,6 +15,7 @@ from nltk import sent_tokenize
 from nltk import word_tokenize
 
 nltk.download("punkt", quiet=True)
+nltk.download("punkt_tab", quiet=True)
 nltk.download("cmudict", quiet=True)
 
 
@@ -90,9 +91,11 @@ def read_novels(path=Path.cwd() / "texts" / "novels"):
             "author": raw_author.replace("_", " ").strip(),
             "year": int(year)
         })
+    if not rows:
+        raise FileNotFoundError(f"No .txt files in {path}")
 
-        df = pd.DataFrame(rows).sort_values("year").reset_index(drop=True)
-        return df
+    df = pd.DataFrame(rows).sort_values("year").reset_index(drop=True)
+    return df
 
 
 def parse(df, store_path=Path.cwd() / "pickles", out_name="parsed.pickle"):
@@ -191,17 +194,21 @@ if __name__ == "__main__":
     """
     uncomment the following lines to run the functions once you have completed them
     """
+    BASE_DIR = Path(__file__).resolve().parent  # folder that holds PartOne.py
+    NOVELS_DIR = BASE_DIR / "p1-texts" / "novels"  # adjust if you prefer texts/novels
+    PICKLE_DIR = BASE_DIR / "pickles"
+    PICKLE_PATH = PICKLE_DIR / "parsed.pickle"
 
     path = Path.cwd() / "p1-texts" / "novels"
     print(path)
     df = read_novels(path) # this line will fail until you have completed the read_novels function above.
     print(df.head())
-    nltk.download("cmudict")
+    #nltk.download("cmudict")
     parse(df)
     print(df.head())
     print(get_ttrs(df))
     print(get_fks(df))
-    df = pd.read_pickle(Path.cwd() / "pickles" /"name.pickle")
+    #df = pd.read_pickle(Path.cwd() / "pickles" /"name.pickle")
     print(adjective_counts(df))
 
     for i, row in df.iterrows():
