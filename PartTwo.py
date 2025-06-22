@@ -13,3 +13,13 @@ def load_and_filter(csv_path: Path) -> pd.DataFrame:
     #(a.ii)
     top4 = df["party"].value_counts().nlargest(4).index
     df = df[df["party"].isin(top4) & (df["party"] != "Speaker")]
+
+
+    #(a.iii)
+    df = df[df["speech_class"] == "Speech"]
+
+    #(a.iv)
+    df = df[df["speech"].str.len() >= 1000]
+
+    print("Filtered dataframe shape:", df.shape)
+    return df.reset_index(drop=True)
