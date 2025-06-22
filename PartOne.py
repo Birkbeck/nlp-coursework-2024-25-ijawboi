@@ -9,6 +9,7 @@ import re
 import math
 import pickle
 import pandas as pd
+
 from pathlib import Path
 from collections import Counter
 from nltk import sent_tokenize
@@ -22,6 +23,8 @@ nltk.download("cmudict", quiet=True)
 nlp = spacy.load("en_core_web_sm")
 nlp.max_length = 2_000_000
 
+VOWEL_RE         = re.compile(r"[aeiouy]+", re.I)   # fallback: vowel clusters
+PHONEME_DIGIT_RE = re.compile(r"\d")
 
 
 def fk_level(text: str, d: dict):
@@ -204,12 +207,13 @@ if __name__ == "__main__":
     df = read_novels(path) # this line will fail until you have completed the read_novels function above.
     print(df.head())
     #nltk.download("cmudict")
-    parse(df)
+    df = parse(df)
     print(df.head())
     print(get_ttrs(df))
     print(get_fks(df))
     #df = pd.read_pickle(Path.cwd() / "pickles" /"name.pickle")
-    print(adjective_counts(df))
+    first_doc = df.loc[0, "parsed"]
+    print(adjective_counts(first_doc))
 
     for i, row in df.iterrows():
         print(row["title"])
