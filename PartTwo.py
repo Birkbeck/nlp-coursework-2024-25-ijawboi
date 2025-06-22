@@ -23,3 +23,13 @@ def load_and_filter(csv_path: Path) -> pd.DataFrame:
 
     print("Filtered dataframe shape:", df.shape)
     return df.reset_index(drop=True)
+
+def tfidf_split(df: pd.DataFrame, ngram_range=(1,1)):
+    vect = TfidfVectorizer(stop_words="english",
+                           max_features=3000,
+                           ngram_range=ngram_range)
+
+    X = vect.fit_transform(df["speech"])
+    y = df["party"]
+    return train_test_split(X, y, test_size=0.2,
+                            stratify=y, random_state=26)
