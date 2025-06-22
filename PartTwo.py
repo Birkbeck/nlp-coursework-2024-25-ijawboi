@@ -71,26 +71,38 @@ def train_and_report(model, Xtr, Xte, ytr, yte, title=""):
 if __name__ == "__main__":
     df = load_and_filter(DATA_PATH)
 
-# unigrams
-    Xtr, Xte, ytr, yte = tfidf_split(df, ngram_range=(1,1))
+    # unigrams
+    Xtr, Xte, ytr, yte = tfidf_split(df, ngram_range=(1, 1))
 
-    train_and_report(RandomForestClassifier(n_estimators=300, random_state=26),
-                     Xtr, Xte, ytr, yte, "RandomForest (uni)")
+    train_and_report(
+        RandomForestClassifier(n_estimators=300, random_state=26),
+        Xtr, Xte, ytr, yte, "RandomForest (uni)"
+    )
+    train_and_report(
+        LinearSVC(),
+        Xtr, Xte, ytr, yte, "Linear SVM (uni)"
+    )
 
-    train_and_report(LinearSVC(),
-                     Xtr, Xte, ytr, yte, "Linear SVM (uni)")
+    # 1–3 grams
+    Xtr3, Xte3, ytr3, yte3 = tfidf_split(df, ngram_range=(1, 3))
 
-# n-grams (1-3)
-    Xtr3, Xte3, ytr3, yte3 = tfidf_split(df, (1, 3))
-    train_and_report(LinearSVC(), Xtr3, Xte3, ytr3, yte3, "Linear SVM (1–3)")
-    train_and_report(RandomForestClassifier(n_estimators=300, random_state=26),
-                     Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)")
+    train_and_report(
+        LinearSVC(),
+        Xtr3, Xte3, ytr3, yte3, "Linear SVM (1–3)"
+    )
+    train_and_report(
+        RandomForestClassifier(n_estimators=300, random_state=26),
+        Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)"
+    )
 
-# custom tokenizer
-    vect_cust = TfidfVectorizer(tokenizer=custom_tokenizer,
-                                ngram_range=(1, 3),
-                                max_features=3000,
-                                stop_words="english")
+    # custom tokenizer
+    vect_cust = TfidfVectorizer(
+        tokenizer=custom_tokenizer,
+        token_pattern=None,  # <- disables the default regex & its warning
+        stop_words=None,  # <- skip scikit-learn’s stop-word list
+        ngram_range=(1, 3),
+        max_features=3000
+    )
 
     X_cust = vect_cust.fit_transform(df["speech"])
     y = df["party"]
@@ -100,6 +112,12 @@ if __name__ == "__main__":
     )
 
     train_and_report(
-        LinearSVC(), XtrC, XteC, ytrC, yteC,
+        LinearSVC(),
+        XtrC, XteC, ytrC, yteC,
         title=f"Linear SVM (custom tok, {X_cust.shape[1]} feats)"
     )
+
+    print(">>> running custom tokenizer experiment")
+
+    print("--- custom block finished OK")
+
