@@ -6,6 +6,7 @@ import nltk
 import spacy
 import re
 import math
+import pickle
 import pandas as pd
 from pathlib import Path
 from collections import counter
@@ -70,7 +71,22 @@ def count_syl(word: str, d: dict):
 def read_novels(path=Path.cwd() / "texts" / "novels"):
     """Reads texts from a directory of .txt files and returns a DataFrame with the text, title,
     author, and year"""
-    pass
+    rows = []
+    for fp in path.glob("*.txt"):
+        m = re.match(r"(.+?)-(.+?)-(\d{4})\.txt$", fp.name)
+        if not m:
+            raise ValueError(f"Unexpected filename pattern -> {fp.name}")
+
+        raw_title, raw_author, year = m.groups()
+        rows.append({
+            "text": fp.read_text(encoding="utf-8"),
+            "title": raw_title.replace("_", " ").strip(),
+            "author": raw_author.replace("_", " ").strip(),
+            "year": int(year)
+        })
+
+        df = pd.DataFrame(rows).sort_values("year").reset_index(drop=True)
+        return df
 
 
 def parse(df, store_path=Path.cwd() / "pickles", out_name="parsed.pickle"):
@@ -81,7 +97,11 @@ def parse(df, store_path=Path.cwd() / "pickles", out_name="parsed.pickle"):
 
 def nltk_ttr(text):
     """Calculates the type-token ratio of a text. Text is tokenized using nltk.word_tokenize."""
-    pass
+    tokens = [tok.lower() for tok in word_tokenize(text) if tok.isalpha()]
+    if not tokens:
+        return 0.0
+    types = set(tokens)
+    return len(types) / len(tokens)
 
 
 def get_ttrs(df):
