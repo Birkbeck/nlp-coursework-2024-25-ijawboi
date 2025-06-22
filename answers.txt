@@ -1,1 +1,15 @@
 Answers to the text questions go here.
+
+Broken-up or headline text
+Tweets, bullet lists, chat snippets and news headlines don’t follow full-sentence rules.
+F-K treats every line break or period as a sentence,
+so ten two-word bullets come out “Grade 0”,
+while one breath-less headline shows “Grade 18”.
+The number reflects odd punctuation, not real reading effort.
+
+Lengthy jargon or short, unusual names
+The formula assumes “more syllables = harder word”.
+In practice, a medical student finds cardiomyopathy routine, while a newcomer may stumble.
+At the same time, a fantasy story loaded with short,
+invented names (Orc, Mordor, Gollum) scores as easy even though the reader still needs to learn them.
+Whenever difficulty depends on background knowledge rather than word length, F-K becomes unreliable.
