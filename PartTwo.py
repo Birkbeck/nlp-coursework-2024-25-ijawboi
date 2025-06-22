@@ -102,7 +102,7 @@ if __name__ == "__main__":
     )
 
     # custom tokenizer
-    vect_cust = TfidfVectorizer(
+    '''vect_cust = TfidfVectorizer(
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
         stop_words=custom_sw,
@@ -123,7 +123,6 @@ if __name__ == "__main__":
     train_and_report(
         svm_cust,
         XtrC, XteC, ytrC, yteC,
-        title=f"SVM custom C=5 ({X_cust.shape[1]} feats)"
-    )
-    print("--- custom block finished OK")
+        title=f"SVM custom C=10 ({X_cust.shape[1]} feats)"
+    )'''
 
