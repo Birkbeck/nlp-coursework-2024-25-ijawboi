@@ -1,6 +1,7 @@
 Answers to the text questions go here.
 
-1 (d) When the Flesch–Kincaid grade level is not reliable
+1 (d) When is the Flesch Kincaid score *not* a valid, robust or reliable estimator of
+text difficulty? Give two conditions.
 
 Broken-up or headline text
 Tweets, bullet lists, chat snippets and news headlines don’t follow full-sentence rules.
@@ -15,3 +16,15 @@ In practice, a medical student finds cardiomyopathy routine, while a newcomer ma
 At the same time, a fantasy story loaded with short,
 invented names (Orc, Mordor, Gollum) scores as easy even though the reader still needs to learn them.
 Whenever difficulty depends on background knowledge rather than word length, F-K becomes unreliable.
+
+
+2 (f) Explain your tokenizer function and discuss its performance.
+
+Using TF-IDF with uni-gram, bi-grams and tri-grams (max_features=3000,
+stop_words='english'). The larger n-gram range allows the classifier to capture
+party-specific phrases like “national health service” or “free trade”.
+Linear-SVC achieved macro-F1 = 0.794 on the held-out test set, beating the
+unigram baseline of (0.776) while keeping to the 3 000-feature limit and low
+training time. Further tweaks (custom lemmatising tokenizer) did not
+surpass this score within the feature budget, so the 1–3 gram model is
+reported as the best trade-off between accuracy and efficiency.
