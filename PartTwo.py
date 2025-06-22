@@ -39,12 +39,14 @@ def tfidf_split(df: pd.DataFrame, ngram_range=(1,1)):
     return train_test_split(X, y, test_size=0.2,
                             stratify=y, random_state=26)
 
-def train_and_report(clf, X_train, X_test, y_train, y_test, title=""):
-    clf.fit(X_train, y_train)
-    preds = clf.predict(X_test)
+def train_and_report(model, Xtr, Xte, ytr, yte, title=""):
+    model.fit(Xtr, ytr)
+    preds = model.predict(Xte)
+    macro_f1 = round(f1_score(yte, preds, average="macro"), 3)
     print(f"\n=== {title} ===")
-    print("macro-F1:", f1_score(y_test, preds, average="macro").round(3))
-    print(classification_report(y_test, preds))
+    print("macro-F1:", macro_f1)
+    print(classification_report(yte, preds))
+
 
 if __name__ == "__main__":
     df = load_and_filter(DATA_PATH)
