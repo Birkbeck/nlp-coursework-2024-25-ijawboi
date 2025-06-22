@@ -110,6 +110,7 @@ if __name__ == "__main__":
     XtrC, XteC, ytrC, yteC = train_test_split(
         X_cust, y, test_size=0.2, stratify=y, random_state=26
     )
+    print(">>> running custom tokenizer experiment")
 
     train_and_report(
         LinearSVC(),
@@ -117,7 +118,7 @@ if __name__ == "__main__":
         title=f"Linear SVM (custom tok, {X_cust.shape[1]} feats)"
     )
 
-    print(">>> running custom tokenizer experiment")
+
 
     print("--- custom block finished OK")
 
