@@ -7,8 +7,13 @@ from sklearn.metrics import classification_report, f1_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 
-# put near the top of PartTwo.py, after imports
+from sklearn.feature_extraction import text
+
+
 import re, spacy
+
+custom_sw = text.ENGLISH_STOP_WORDS.union({"make"})
+
 nlp_tok = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
 NAME_RE = re.compile(r"\b[A-Z][a-z]+\s[A-Z][a-z]+\b")          # remove full names
@@ -94,13 +99,12 @@ if __name__ == "__main__":
         RandomForestClassifier(n_estimators=300, random_state=26),
         Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)"
     )
-    print(">>> reached custom block")
 
     # custom tokenizer
     vect_cust = TfidfVectorizer(
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
-        stop_words="english",
+        stop_words=custom_sw,
         ngram_range=(1, 2),
         max_features=3000,
         min_df=3,
@@ -113,13 +117,12 @@ if __name__ == "__main__":
     XtrC, XteC, ytrC, yteC = train_test_split(
         X_cust, y, test_size=0.2, stratify=y, random_state=26
     )
-    print(">>> running custom tokenizer experiment")
 
-    svm_cust = LinearSVC(C=3, class_weight="balanced")  # balanced handles the party skew
+    svm_cust = LinearSVC(C=5, class_weight="balanced")  # balanced handles the party skew
     train_and_report(
         svm_cust,
         XtrC, XteC, ytrC, yteC,
-        title=f"SVM custom C=3 ({X_cust.shape[1]} feats)"
+        title=f"SVM custom C=5 ({X_cust.shape[1]} feats)"
     )
     print("--- custom block finished OK")
 
