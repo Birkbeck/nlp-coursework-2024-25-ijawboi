@@ -106,7 +106,7 @@ if __name__ == "__main__":
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
         stop_words=custom_sw,
-        ngram_range=(1, 2),
+        ngram_range=(1, 3),
         max_features=3000,
         min_df=3,
         max_df=0.9
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         X_cust, y, test_size=0.2, stratify=y, random_state=26
     )
 
-    svm_cust = LinearSVC(C=5, class_weight="balanced")  # balanced handles the party skew
+    svm_cust = LinearSVC(C=10, class_weight="balanced")  # balanced handles the party skew
     train_and_report(
         svm_cust,
         XtrC, XteC, ytrC, yteC,
