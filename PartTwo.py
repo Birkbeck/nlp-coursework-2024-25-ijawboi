@@ -85,3 +85,21 @@ if __name__ == "__main__":
     train_and_report(LinearSVC(), Xtr3, Xte3, ytr3, yte3, "Linear SVM (1–3)")
     train_and_report(RandomForestClassifier(n_estimators=300, random_state=26),
                      Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)")
+
+# custom tokenizer
+    vect_cust = TfidfVectorizer(tokenizer=custom_tokenizer,
+                                ngram_range=(1, 3),
+                                max_features=3000,
+                                stop_words="english")
+
+    X_cust = vect_cust.fit_transform(df["speech"])
+    y = df["party"]
+
+    XtrC, XteC, ytrC, yteC = train_test_split(
+        X_cust, y, test_size=0.2, stratify=y, random_state=26
+    )
+
+    train_and_report(
+        LinearSVC(), XtrC, XteC, ytrC, yteC,
+        title=f"Linear SVM (custom tok, {X_cust.shape[1]} feats)"
+    )
