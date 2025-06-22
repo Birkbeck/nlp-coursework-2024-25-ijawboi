@@ -12,7 +12,8 @@ from sklearn.feature_extraction import text
 
 import re, spacy
 
-custom_sw = text.ENGLISH_STOP_WORDS.union({"make"})
+base_sw   = text.ENGLISH_STOP_WORDS
+custom_sw = list(base_sw.union({"make"}))
 
 nlp_tok = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 
