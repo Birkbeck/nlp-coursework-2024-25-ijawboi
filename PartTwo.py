@@ -99,9 +99,10 @@ if __name__ == "__main__":
     vect_cust = TfidfVectorizer(
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
-        stop_words=None,  # <- skip scikit-learn’s stop-word list
+        stop_words="english",  # <- skip scikit-learn’s stop-word list
         ngram_range=(1, 3),
-        max_features=3000
+        max_features=3000,
+        min_df=2
     )
 
     X_cust = vect_cust.fit_transform(df["speech"])
