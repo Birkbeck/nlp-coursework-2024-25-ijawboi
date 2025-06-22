@@ -92,7 +92,20 @@ def read_novels(path=Path.cwd() / "texts" / "novels"):
 def parse(df, store_path=Path.cwd() / "pickles", out_name="parsed.pickle"):
     """Parses the text of a DataFrame using spaCy, stores the parsed docs as a column and writes 
     the resulting  DataFrame to a pickle file"""
-    pass
+    store_path.mkdir(parents=True, exist_ok=True)
+    pickle_fp = store_path / out_name
+
+    if pickle_fp.exists():
+        return pd.read_pickle(pickle_fp)
+
+    texts = df["text"].tolist()
+    docs = list(nlp.pipe(texts, batch_size=8, n_process=-1))
+
+    df = df.copy()
+    df["parsed"] = docs
+
+    df.to_pickle(pickle_fp)
+    return df
 
 
 def nltk_ttr(text):
