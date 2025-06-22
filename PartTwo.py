@@ -59,3 +59,9 @@ if __name__ == "__main__":
 
     train_and_report(LinearSVC(),
                      Xtr, Xte, ytr, yte, "Linear SVM (uni)")
+
+# n-grams (1-3)
+    Xtr3, Xte3, ytr3, yte3 = tfidf_split(df, (1, 3))
+    train_and_report(LinearSVC(), Xtr3, Xte3, ytr3, yte3, "Linear SVM (1–3)")
+    train_and_report(RandomForestClassifier(n_estimators=300, random_state=26),
+                     Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)")
