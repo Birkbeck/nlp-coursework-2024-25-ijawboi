@@ -1,5 +1,7 @@
 Answers to the text questions go here.
 
+1 (d) When the Flesch–Kincaid grade level is not reliable
+
 Broken-up or headline text
 Tweets, bullet lists, chat snippets and news headlines don’t follow full-sentence rules.
 F-K treats every line break or period as a sentence,
