@@ -19,7 +19,7 @@ nltk.download("cmudict", quiet=True)
 
 
 nlp = spacy.load("en_core_web_sm")
-nlp.max_length = 2000000
+nlp.max_length = 2_000_000
 
 
 
@@ -140,7 +140,7 @@ def get_fks(df):
     return results
 
 
-def subjects_by_verb_pmi(doc, target_verb: str):
+def subjects_by_verb_pmi(doc, target_verb: str, top_n: int = 10):
     """Extracts the most common subjects of a given verb in a parsed document. Returns a list."""
     target = target_verb.lower()
     subj_anyverb = Counter()
@@ -169,13 +169,17 @@ def subjects_by_verb_pmi(doc, target_verb: str):
 
 
 
-def subjects_by_verb_count(doc, verb):
+def subjects_by_verb_count(doc, verb: str, top_n: int = 10):
     """Extracts the most common subjects of a given verb in a parsed document. Returns a list."""
-    pass
+    counter = Counter(
+        tok.lemma_.lower() for tok in doc
+        if tok.dep_ == "nsubj" and tok.head.lemma_.lower() == verb.lower()
+    )
+    return counter.most_common(top_n)
 
 
 
-def adjective_counts(doc):
+def adjective_counts(doc, top_n: int = 10):
     """Extracts the most common adjectives in a parsed document. Returns a list of tuples."""
     counter = Counter(tok.lemma_.lower()
                       for tok in doc if tok.pos_ == "ADJ")
