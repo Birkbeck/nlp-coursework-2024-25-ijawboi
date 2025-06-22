@@ -4,6 +4,8 @@ from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, f1_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
 
 DATA_PATH = Path(__file__).resolve().parent / "texts" / "speeches" / "hansard40000.csv"
 
@@ -46,3 +48,12 @@ def train_and_report(clf, X_train, X_test, y_train, y_test, title=""):
 
 if __name__ == "__main__":
     df = load_and_filter(DATA_PATH)
+
+# unigrams
+    Xtr, Xte, ytr, yte = tfidf_split(df, ngram_range=(1,1))
+
+    train_and_report(RandomForestClassifier(n_estimators=300, random_state=26),
+                     Xtr, Xte, ytr, yte, "RandomForest (uni)")
+
+    train_and_report(LinearSVC(),
+                     Xtr, Xte, ytr, yte, "Linear SVM (uni)")
