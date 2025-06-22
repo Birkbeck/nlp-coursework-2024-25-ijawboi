@@ -22,8 +22,8 @@ def custom_tokenizer(text):
     return [
         tok.lemma_ for tok in doc
         if tok.is_alpha
-        and tok.pos_ in {"NOUN", "VERB", "ADJ"}     # focus on content words
-        and len(tok) > 2                            # drop very short tokens
+        and tok.pos_ in {"NOUN", "VERB", "ADJ", "PROPN"}
+        and len(tok) > 2
     ]
 
 
@@ -94,15 +94,17 @@ if __name__ == "__main__":
         RandomForestClassifier(n_estimators=300, random_state=26),
         Xtr3, Xte3, ytr3, yte3, "RandomForest (1–3)"
     )
+    print(">>> reached custom block")
 
     # custom tokenizer
     vect_cust = TfidfVectorizer(
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
-        stop_words="english",  # <- skip scikit-learn’s stop-word list
+        stop_words="english",
         ngram_range=(1, 3),
         max_features=3000,
-        min_df=2
+        min_df=3,
+        max_df=0.9
     )
 
     X_cust = vect_cust.fit_transform(df["speech"])
@@ -113,13 +115,11 @@ if __name__ == "__main__":
     )
     print(">>> running custom tokenizer experiment")
 
+    svm_cust = LinearSVC(C=3, class_weight="balanced")  # balanced handles the party skew
     train_and_report(
-        LinearSVC(),
+        svm_cust,
         XtrC, XteC, ytrC, yteC,
-        title=f"Linear SVM (custom tok, {X_cust.shape[1]} feats)"
+        title=f"SVM custom C=3 ({X_cust.shape[1]} feats)"
     )
-
-
-
     print("--- custom block finished OK")
 
