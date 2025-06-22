@@ -2,6 +2,7 @@
 
 # Note: The template functions here and the dataframe format for structuring your solution is a suggested but not mandatory approach. You can use a different approach if you like, as long as you clearly answer the questions and communicate your answers clearly.
 
+
 import nltk
 import spacy
 import re
@@ -9,7 +10,12 @@ import math
 import pickle
 import pandas as pd
 from pathlib import Path
-from collections import counter
+from collections import Counter
+from nltk import sent_tokenize
+from nltk import word_tokenize
+
+nltk.download("punkt", quiet=True)
+nltk.download("cmudict", quiet=True)
 
 
 nlp = spacy.load("en_core_web_sm")
@@ -181,6 +187,7 @@ if __name__ == "__main__":
     """
     uncomment the following lines to run the functions once you have completed them
     """
+
     path = Path.cwd() / "p1-texts" / "novels"
     print(path)
     df = read_novels(path) # this line will fail until you have completed the read_novels function above.
