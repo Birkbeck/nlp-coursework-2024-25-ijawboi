@@ -7,6 +7,26 @@ from sklearn.metrics import classification_report, f1_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import LinearSVC
 
+# put near the top of PartTwo.py, after imports
+import re, spacy
+nlp_tok = spacy.load("en_core_web_sm", disable=["parser", "ner"])
+
+NAME_RE = re.compile(r"\b[A-Z][a-z]+\s[A-Z][a-z]+\b")          # remove full names
+NUM_RE  = re.compile(r"\b\d[\d,]*\b")                          # strip numbers
+
+def custom_tokenizer(text):
+    # quick clean-ups
+    text = NAME_RE.sub(" ", text)      # personal names → space
+    text = NUM_RE.sub(" ",  text)      # numbers        → space
+    doc = nlp_tok(text.lower())
+    return [
+        tok.lemma_ for tok in doc
+        if tok.is_alpha
+        and tok.pos_ in {"NOUN", "VERB", "ADJ"}     # focus on content words
+        and len(tok) > 2                            # drop very short tokens
+    ]
+
+
 DATA_PATH = Path(__file__).resolve().parent / "texts" / "speeches" / "hansard40000.csv"
 
 def load_and_filter(csv_path: Path) -> pd.DataFrame:
