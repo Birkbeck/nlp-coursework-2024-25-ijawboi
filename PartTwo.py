@@ -33,3 +33,10 @@ def tfidf_split(df: pd.DataFrame, ngram_range=(1,1)):
     y = df["party"]
     return train_test_split(X, y, test_size=0.2,
                             stratify=y, random_state=26)
+
+def train_and_report(clf, X_train, X_test, y_train, y_test, title=""):
+    clf.fit(X_train, y_train)
+    preds = clf.predict(X_test)
+    print(f"\n=== {title} ===")
+    print("macro-F1:", f1_score(y_test, preds, average="macro").round(3))
+    print(classification_report(y_test, preds))
