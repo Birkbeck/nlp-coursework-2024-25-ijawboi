@@ -134,9 +134,32 @@ def get_fks(df):
     return results
 
 
-def subjects_by_verb_pmi(doc, target_verb):
+def subjects_by_verb_pmi(doc, target_verb: str):
     """Extracts the most common subjects of a given verb in a parsed document. Returns a list."""
-    pass
+    target = target_verb.lower()
+    subj_anyverb = Counter()
+    subj_target = Counter()
+
+    for tok in doc:
+        if tok.dep_ == "nsubj":
+            lemma = tok.lemma_.lower()
+            subj_anyverb[lemma] += 1
+            if tok.head.lemma_.lower() == target:
+                subj_target[lemma] += 1
+
+    total_any = sum(subj_anyverb.values())
+    total_target = sum(subj_target.values())
+
+    pmi_scores = {}
+    for subj, c_xy in subj_target.items():
+        p_xy = c_xy / total_target
+        p_x = subj_anyverb[subj] / total_any
+
+        pmi_scores[subj] = math.log2(p_xy / p_x) if p_x else 0.0
+
+    ranked = sorted(pmi_scores.items(),
+                    key=lambda kv: (-kv[1], -subj_target[kv[0]]))[:top_n]
+    return ranked
 
 
 
