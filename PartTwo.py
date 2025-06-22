@@ -43,3 +43,6 @@ def train_and_report(clf, X_train, X_test, y_train, y_test, title=""):
     print(f"\n=== {title} ===")
     print("macro-F1:", f1_score(y_test, preds, average="macro").round(3))
     print(classification_report(y_test, preds))
+
+if __name__ == "__main__":
+    df = load_and_filter(DATA_PATH)
