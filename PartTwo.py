@@ -101,7 +101,7 @@ if __name__ == "__main__":
         tokenizer=custom_tokenizer,
         token_pattern=None,  # <- disables the default regex & its warning
         stop_words="english",
-        ngram_range=(1, 3),
+        ngram_range=(1, 2),
         max_features=3000,
         min_df=3,
         max_df=0.9
