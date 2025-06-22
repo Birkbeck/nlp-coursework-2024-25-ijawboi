@@ -1,6 +1,9 @@
 
 import pandas as pd
 from pathlib import Path
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, f1_score
 
 DATA_PATH = Path(__file__).resolve().parent / "texts" / "speeches" / "hansard40000.csv"
 
