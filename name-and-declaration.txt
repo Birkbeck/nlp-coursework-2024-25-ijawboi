@@ -1,5 +1,21 @@
-Full Name (as on student record):
+Full Name (as on student record): Ayibaemi Igonifagha
 
-Student number: 
+Student number: 14114312
 
 Academic Declaration:
+
+“I have read and understood the sections of plagiarism in the College Policy
+on assessment offences and confirm that the work is my own, with the work
+of others clearly acknowledged. I give my permission to submit my report
+to the plagiarism testing database that the College is using and test it using
+plagiarism detection software, search engines or meta-searching software.”
+
+The parameter-tuning ideas and example code fragments (e.g. tfidf_split,
+train_and_report scaffolding) were suggested by ChatGPT (OpenAI o3) during the
+development process on 25–26 June 2025.
+
+The Regex for syllable counting (“PHONEME_DIGIT_RE”) adapted from an MIT-licensed
+gist by M. Dewitt.
+
+SpaCy, scikit-learn, NLTK and pandas are used under their respective
+licences; see requirements.txt.
