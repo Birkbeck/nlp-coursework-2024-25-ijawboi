@@ -2,6 +2,19 @@
 
 # Note: The template functions here and the dataframe format for structuring your solution is a suggested but not mandatory approach. You can use a different approach if you like, as long as you clearly answer the questions and communicate your answers clearly.
 
+"""
+Attribution/ third-party code
+The Flesch–Kincaid helpers (fk_level, count_syl) implement the standard
+formula shown in the lecture slides (0.39·W/S + 11.8·S/W – 15.59).
+
+Minor refactoring ideas (e.g. using pandas sort_values, nlp.pipe batching)
+were suggested by ChatGPT (OpenAI o3, Jun 2025).
+
+External libraries (pandas, NLTK, spaCy) are used under their respective
+open-source licences.
+"""
+
+
 
 import nltk
 import spacy

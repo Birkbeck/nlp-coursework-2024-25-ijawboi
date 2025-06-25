@@ -1,3 +1,13 @@
+'''
+Attribution/ third-party code
+The tf-idf/ scikit-learn pipeline (tfidf_split & train_and_report scaffolds)
+and several parameter-tuning ideas were suggested via ChatGPT (OpenAI o3, Jun 2025)
+and adapted and integrated to satisfy the 3000 feature constraint.
+
+External libraries (pandas, scikit-learn, spaCy) are utilised under their
+respective open-source licences.
+'''
+
 
 import pandas as pd
 from pathlib import Path
