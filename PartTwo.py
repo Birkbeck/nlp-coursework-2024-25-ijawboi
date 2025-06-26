@@ -32,8 +32,8 @@ NUM_RE  = re.compile(r"\b\d[\d,]*\b")                          # strip numbers
 
 def custom_tokenizer(text):
     # quick clean-ups
-    text = NAME_RE.sub(" ", text)      # personal names → space
-    text = NUM_RE.sub(" ",  text)      # numbers        → space
+    text = NAME_RE.sub(" ", text)      # personal names -> space
+    text = NUM_RE.sub(" ",  text)      # numbers        -> space
     doc = nlp_tok(text.lower())
     return [
         tok.lemma_ for tok in doc
