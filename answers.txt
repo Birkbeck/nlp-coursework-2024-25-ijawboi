@@ -1,6 +1,6 @@
 Answers to the text questions go here.
 
-1 (d) When is the Flesch Kincaid score *not* a valid, robust or reliable estimator of
+1 (d) When is the Flesch-Kincaid score *not* a valid, robust or reliable estimator of
 text difficulty? Give two conditions.
 
 Broken-up or headline text
