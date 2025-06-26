@@ -36,7 +36,7 @@ nltk.download("cmudict", quiet=True)
 nlp = spacy.load("en_core_web_sm")
 nlp.max_length = 2_000_000
 
-VOWEL_RE         = re.compile(r"[aeiouy]+", re.I)   # fallback: vowel clusters
+VOWEL_RE         = re.compile(r"[aeiouy]+", re.I)   # vowel clusters
 PHONEME_DIGIT_RE = re.compile(r"\d")
 
 
@@ -211,13 +211,13 @@ if __name__ == "__main__":
     uncomment the following lines to run the functions once you have completed them
     """
     BASE_DIR = Path(__file__).resolve().parent  # folder that holds PartOne.py
-    NOVELS_DIR = BASE_DIR / "p1-texts" / "novels"  # adjust if you prefer texts/novels
+    NOVELS_DIR = BASE_DIR / "p1-texts" / "novels"
     PICKLE_DIR = BASE_DIR / "pickles"
     PICKLE_PATH = PICKLE_DIR / "parsed.pickle"
 
     path = Path.cwd() / "p1-texts" / "novels"
     print(path)
-    df = read_novels(path) # this line will fail until you have completed the read_novels function above.
+    df = read_novels(path)
     print(df.head())
     #nltk.download("cmudict")
     df = parse(df)
